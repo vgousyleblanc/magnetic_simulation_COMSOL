@@ -7,10 +7,12 @@ Created on Fri Aug 14 09:05:45 2020
 
 import mph
 import numpy as np
-from spatial_scan import spatial_scan
+from voltage_scan import spatial_scan
 from voltage_scan import optimize
 from differential_fit import differential_fit
 from scipy.stats import linregress
+
+
 client = mph.Client()
 model = client.load('magnetic_field_compensation_geo_extended_2.mph')
 
@@ -33,8 +35,9 @@ model.parameter('V_x22', '0[V]')
 model.parameter('V_y1', '0[V]')
 model.parameter('V_y2', '0[V]')
 
-#%%
 model.mesh()
+#%%
+
 
 scan='v'
 dim='x'
@@ -160,14 +163,7 @@ if scan=='s':
          
     #x,y,z,mx,my,mz=np.loadtxt(file_name,unpack=True,skiprows=20)
     #spatial_scan(x,y,z,mx,my,mz)
-    
 
-
-
-
-    
-
-#%%
 
 
 
