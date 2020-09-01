@@ -57,18 +57,12 @@ def bilinear_fit(v0,v1,mg, dimension: str, coila: int, coilb: int):
 
     return bup, bdn, bsd, (-p_dn[0]/p_dn[1]), (-p_dn[2]/p_dn[1])
 
-#%%
-
 cmap_diverging = plt.get_cmap('RdBu')
 cmap_normal    = plt.get_cmap('viridis')
 
-#v0,v1,mgx,mgy,mgz=np.loadtxt("voltage_scan_y_nG.txt",unpack=True,skiprows=5)
-
-
-
 def optimize(v0,v1,mgz):
 
-    p_avg, c_avg = curve_fit(bilinear, (v0, v1), mgy)  # , sigma=s_up)
+    p_avg, c_avg = curve_fit(bilinear, (v0, v1), mgz)  # , sigma=s_up)
     
     e_avg = np.sqrt(np.diag(c_avg))
     print('The error on the parameter is :',e_avg) 
@@ -88,7 +82,7 @@ def optimize(v0,v1,mgz):
         #print(arxu[i])
         #mg_x[i,:]=mx2[ind]
         #mg_y[i,:]=my2[ind]
-        mg_z[i,:]=mgy[ind]
+        mg_z[i,:]=mgz[ind]
         
     #mg_z=mg_z[1:,:]*1000*1000
     #print(mg_z)
@@ -116,13 +110,12 @@ def optimize(v0,v1,mgz):
     
     plt.show()
     return fitm,fitb
-    
-    
+
 def spatial_scan(x,y,z,mx,my,mz):
     x=x/100
     y=y/100
     z=z/100
-    #%%
+    
     
     plane=-0.3
     plane1z=np.where(z==plane)#np.where(z==plane)
@@ -196,4 +189,3 @@ def spatial_scan(x,y,z,mx,my,mz):
     fig.colorbar(mapp)
     
     plt.show()
-    return mg_x,mg_y,mg_z
