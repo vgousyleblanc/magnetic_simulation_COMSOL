@@ -99,8 +99,8 @@ def optimize(v0,v1,mgz):
     #ax.plot(v0,b,'-.')
     #normalize the data
     
-    x=[0, 1]
-    y=[0*fitm+fitb,1*fitm+fitb]
+    x=[-3, -6]
+    y=[-3*fitm+fitb,-6*fitm+fitb]
     ax.plot(x,y,c='black',ls='--',label='Fit')
     ax.set_xlabel(f"Voltage for Coil 1[V]")
     ax.set_ylabel(f"Voltage for Coil 2[V]")
@@ -189,3 +189,7 @@ def spatial_scan(x,y,z,mx,my,mz):
     fig.colorbar(mapp)
     
     plt.show()
+#%%
+file_name="z_compensation_test.txt"
+v0,v1,mx,my,mz=np.loadtxt(file_name,unpack=True,skiprows=5)
+fitm,fitb=optimize(v0,v1,mz)

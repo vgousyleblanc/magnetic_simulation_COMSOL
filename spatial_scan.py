@@ -8,18 +8,17 @@ Created on Fri Aug 14 08:52:30 2020
 import numpy as np
 
 import matplotlib as mpl
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 
-
-#x,y,z,mx,my,mz=np.loadtxt('full_compensation_z_125cm.txt',unpack=True,skiprows=9)
+x,y,z,mx,my,mz=np.loadtxt('full_compensation_z_125cm.txt',unpack=True,skiprows=9)
 #convert=1e4*1e3
 #convert_g=12.54
 
-def spatial_scan(x,y,z,mx,my,mz):
+def spatial_scan_2(x,y,z,mx,my,mz):
     x=x/100
     y=y/100
     z=z/100
-    #%%
+    
     
     plane=-0.3
     plane1z=np.where(z==plane)#np.where(z==plane)
@@ -93,4 +92,5 @@ def spatial_scan(x,y,z,mx,my,mz):
     fig.colorbar(mapp)
     
     plt.show()
-    return mg_x,mg_y,mg_z
+   
+
