@@ -60,7 +60,7 @@ def bilinear_fit(v0,v1,mg, dimension: str, coila: int, coilb: int):
 cmap_diverging = plt.get_cmap('RdBu')
 cmap_normal    = plt.get_cmap('viridis')
 
-def optimize(v0,v1,mgz):
+def optimize(v0,v1,mgz,dim):
 
     p_avg, c_avg = curve_fit(bilinear, (v0, v1), mgz)  # , sigma=s_up)
     
@@ -99,13 +99,27 @@ def optimize(v0,v1,mgz):
     #ax.plot(v0,b,'-.')
     #normalize the data
     
-    x=[-3, -6]
-    y=[-3*fitm+fitb,-6*fitm+fitb]
-    ax.plot(x,y,c='black',ls='--',label='Fit')
-    ax.set_xlabel(f"Voltage for Coil 1[V]")
-    ax.set_ylabel(f"Voltage for Coil 2[V]")
-    ax.set_title(f"$B_z$ [mG]")
-    
+    if dim=="y":
+        x=[-1, -5]
+        y=[-1*fitm+fitb,-5*fitm+fitb]
+        ax.plot(x,y,c='black',ls='--',label='Fit')
+        ax.set_xlabel(f"Voltage for Coil 1[V]")
+        ax.set_ylabel(f"Voltage for Coil 2[V]")
+        ax.set_title(f"$B {dim}$ [mG]")
+    if dim=="x":
+        x=[1, 5]
+        y=[1*fitm+fitb,5*fitm+fitb]
+        ax.plot(x,y,c='black',ls='--',label='Fit')
+        ax.set_xlabel(f"Voltage for Coil 1[V]")
+        ax.set_ylabel(f"Voltage for Coil 2[V]")
+        ax.set_title(f"$B {dim}$ [mG]")
+    if dim=="z":
+        x=[-1, -10]
+        y=[-1*fitm+fitb,-10*fitm+fitb]
+        ax.plot(x,y,c='black',ls='--',label='Fit')
+        ax.set_xlabel(f"Voltage for Coil 1[V]")
+        ax.set_ylabel(f"Voltage for Coil 2[V]")
+        ax.set_title(f"$B {dim}$ [mG]")
     fig.colorbar(mapp)
     
     plt.show()
@@ -190,6 +204,6 @@ def spatial_scan(x,y,z,mx,my,mz):
     
     plt.show()
 #%%
-file_name="z_compensation_test.txt"
+file_name="voltage_scan_testing.txt"
 v0,v1,mx,my,mz=np.loadtxt(file_name,unpack=True,skiprows=5)
-fitm,fitb=optimize(v0,v1,mz)
+fitm,fitb=optimize(v0,v1,mz,"z")

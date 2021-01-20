@@ -70,10 +70,13 @@ if scan=='v' and dim=='y':
     file_name='voltage_scan_y.txt'
     model.export('Y_table',file_name)
     v0,v1,mx,my,mz=np.loadtxt("voltage_scan_y_vf_2.txt",unpack=True,skiprows=5)
-    fitm,fitb=optimize(v0,v1,my)
+    fitm,fitb=optimize(v0,v1,my,dim)
     computation_time = time.time()-start
     print('Time taken to compute the result',computation_time/60)
     #print('Time taken to compute the result',computation_time)
+    
+    
+    
 if scan=='v' and dim=='x':
     print('Starting the voltage scan in the '+str(dim)+'  dimension')
     #print('Starting the voltage scan')
@@ -81,18 +84,23 @@ if scan=='v' and dim=='x':
     file_name='voltage_scan_x_vf.txt'
     v0,v1,mx,my,mz=np.loadtxt("voltage_scan_x_vf.txt",unpack=True,skiprows=5)
     #v0,v1,mx,my,mz=np.loadtxt(file_name,unpack=True,skiprows=5)
-    fitm,fitb=optimize(v0,v1,mx)
+    fitm,fitb=optimize(v0,v1,mx,dim)
     computation_time = time.time()-start
     print('Time taken to compute the result',computation_time/60)
+    
+    
 if scan=='v' and dim=='z':
     print('Starting the voltage scan in the '+str(dim)+'  dimension')
     model.solve('Z_sweep')
     file_name='voltage_scan_z_vf.txt'
     #model.export('Table 1',file_name)
     v0,v1,mx,my,mz=np.loadtxt(file_name,unpack=True,skiprows=5)
-    fitm,fitb=optimize(v0,v1,mz)
+    fitm,fitb=optimize(v0,v1,mz,dim)
     computation_time = time.time()-start
     print('Time taken to compute the result',computation_time/60)
+    
+    
+    
 #%%    
 scan='s'
 if scan=='s':   
@@ -112,8 +120,8 @@ if scan=='s':
                 x=x/100
                 y=y/100
                 z=z/100
-            #dim="x"
                 k[i]=differential_fit(x,y,z,mx,my,mz,dim)
+                
             slope=linregress(v0,k)
             coil1=-slope.intercept/slope.slope
             coil2=fitm*coil1+fitb
@@ -170,8 +178,8 @@ if scan=='s':
                 file_name='spatial_scan_'+str(dim)+str(v0[i])+'.txt'
                 model.export('Full_compensation',file_name)
                 x,y,z,mx,my,mz=np.loadtxt('spatial_scan_'+str(dim)+str(v0[i])+'.txt',unpack=True,skiprows=9)
-            #dim="x"
                 k[i]=differential_fit(x,y,z,mx,my,mz,dim)
+           
             slope=linregress(v0,k)
             coil1=-slope.intercept/slope.slope
             coil2=fitm*coil1+fitb
@@ -188,8 +196,7 @@ if scan=='s':
             spatial_scan(x,y,z,mx,my,mz)
 end=time.time()
 print('final computation time', start-end)     
-    #x,y,z,mx,my,mz=np.loadtxt(file_name,unpack=True,skiprows=20)
-    #spatial_scan(x,y,z,mx,my,mz)
+ 
     
 
 
