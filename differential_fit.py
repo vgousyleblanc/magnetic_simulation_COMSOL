@@ -18,6 +18,13 @@ from scipy.optimize import curve_fit
 #%%
 
 def differential_fit(x,y,z,mx,my,mz,dim): # define the dimension of the plane 
+    if np.any(z==0.5):
+        print("okay")
+    else:
+        z=z/100
+        x=x/100
+        y=y/100
+    print(z[0])
     plane=-0.3
     plane1z=np.where(z==plane)#np.where(z==plane)
     
@@ -45,6 +52,7 @@ def differential_fit(x,y,z,mx,my,mz,dim): # define the dimension of the plane
         mean_hi = np.mean(mg_x[-1,:])
         diff=mean_hi - mean_low
     if dim=='y':
+        
         mean_low = np.mean(mg_y[:,0])
         mean_hi = np.mean(mg_y[:,-1])
         diff=mean_hi - mean_low
@@ -53,30 +61,13 @@ def differential_fit(x,y,z,mx,my,mz,dim): # define the dimension of the plane
         planed=-0.4
         planezu=np.where(z==planeu)
         planezd=np.where(z==planed)
-        mxu=mx[planezu]
-        myu=my[planezu]
+       
         mzu=mz[planezu]
-        mxd=mx[planezd]
-        myd=my[planezd]
         mzd=mz[planezd]
-        
-        mg_xu=np.zeros((len(xu),len(yu)))
-        mg_yu=np.zeros((len(xu),len(yu)))
-        mg_zu=np.zeros((len(xu),len(yu)))
-        mg_xd=np.zeros((len(xu),len(yu)))
-        mg_yd=np.zeros((len(xu),len(yu)))
-        mg_zd=np.zeros((len(xu),len(yu)))
-        for i in range(1,len(xu)):
-            ind=np.where(x2==xu[i])
-            #print(np.shape(ind))
-            #print(arxu[i])
-            mg_xu[i,:]=mxu[ind]
-            mg_yu[i,:]=myu[ind]
-            mg_zu[i,:]=mzu[ind] 
-            mg_zd[i,:]=mzd[ind]    
-            
-        diff=np.mean(mg_zd)-np.mean(mg_zu)
     
+            
+        diff=np.mean(mzu)-np.mean(mzd)
+        print(diff)
     return diff # we only want to have the differential plo
 
 """

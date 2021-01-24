@@ -100,15 +100,15 @@ def optimize(v0,v1,mgz,dim):
     #normalize the data
     
     if dim=="y":
-        x=[-1, -5]
-        y=[-1*fitm+fitb,-5*fitm+fitb]
+        x=[0, -3]
+        y=[-0*fitm+fitb,-3*fitm+fitb]
         ax.plot(x,y,c='black',ls='--',label='Fit')
         ax.set_xlabel(f"Voltage for Coil 1[V]")
         ax.set_ylabel(f"Voltage for Coil 2[V]")
         ax.set_title(f"$B {dim}$ [mG]")
     if dim=="x":
-        x=[1, 5]
-        y=[1*fitm+fitb,5*fitm+fitb]
+        x=[0, -3]
+        y=[0*fitm+fitb,-3*fitm+fitb]
         ax.plot(x,y,c='black',ls='--',label='Fit')
         ax.set_xlabel(f"Voltage for Coil 1[V]")
         ax.set_ylabel(f"Voltage for Coil 2[V]")
